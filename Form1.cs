@@ -16,5 +16,20 @@ namespace color_spaces
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            (new Task1()).Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            (new Task2()).Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            (new Task3()).Show();
+        }
     }
 }
