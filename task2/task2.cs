@@ -95,6 +95,27 @@ namespace color_spaces
             barCharts = new List<Image> { redBarChart, greenBarChart, blueBarChart };
         }
 
+        void ShowSourceImage()
+        {
+            if (selectedFileName != null)
+            {
+                Image sourceImage = Image.FromFile(selectedFileName);
+                sourcePictureBox.Image = sourceImage;
+                resultPictureBox.Image = null;
+                barChartPictureBox.Image = null;
+                //сохраняем в памяти все цветные изображения и гистограммы
+                GetColorImagesAndBarCharts(sourceImage, out colorImages, out barCharts);
+            }
+            else
+            {
+                sourcePictureBox.Image = null;
+                resultPictureBox.Image = null;
+                barChartPictureBox.Image = null;
+                colorImages = null;
+                barCharts = null;
+            }
+        }
+
         public Task2()
         {
             InitializeComponent();
@@ -102,8 +123,36 @@ namespace color_spaces
 
         private void chooseFileButton_Click(object sender, EventArgs e)
         {
-
+            var dialog = new OpenFileDialog();
+            dialog.Multiselect = false;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                selectedFileName = dialog.FileName;
+                filePathLabel.Text = selectedFileName;
+              
+                colorComboBox.SelectedIndex = 0;
+            }
+            else
+            {
+                selectedFileName = null;
+            }
+            dialog.Dispose();
+            ShowSourceImage();
         }
 
+        private void colorComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (colorImages == null) return;
+            if (colorComboBox.SelectedIndex == 0)
+            {
+                resultPictureBox.Image = null;
+                barChartPictureBox.Image = null;
+            }
+            else
+            {
+                resultPictureBox.Image = colorImages[colorComboBox.SelectedIndex - 1];
+                barChartPictureBox.Image = barCharts[colorComboBox.SelectedIndex - 1];
+            }
+        }
     }
 }
