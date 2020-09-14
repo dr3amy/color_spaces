@@ -10,17 +10,11 @@ using System.Windows.Forms;
 
 namespace color_spaces
 {
-    public partial class Task2 : Form
+    public partial class Task1 : Form
     {
-        public Task2()
+        public Task1()
         {
             InitializeComponent();
         }
-
-        private void chooseFileButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }
