@@ -42,16 +42,19 @@ namespace color_spaces
             this.HdTvImage = new System.Windows.Forms.PictureBox();
             this.PalImage = new System.Windows.Forms.PictureBox();
             this.choseImageButton = new System.Windows.Forms.Button();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.palChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.hdtvChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.originalImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HdTvImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PalImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            this.diffImage = new System.Windows.Forms.PictureBox();
+            this.label4 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize) (this.originalImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.HdTvImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.PalImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.palChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.hdtvChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.diffImage)).BeginInit();
             this.SuspendLayout();
             // 
             // originalImage
@@ -62,7 +65,7 @@ namespace color_spaces
             this.originalImage.TabIndex = 0;
             this.originalImage.TabStop = false;
             // 
-            // LumaImage
+            // HdTvImage
             // 
             this.HdTvImage.Location = new System.Drawing.Point(35, 381);
             this.HdTvImage.Name = "HdTvImage";
@@ -70,9 +73,9 @@ namespace color_spaces
             this.HdTvImage.TabIndex = 1;
             this.HdTvImage.TabStop = false;
             // 
-            // ColorimetricImage
+            // PalImage
             // 
-            this.PalImage.Location = new System.Drawing.Point(781, 373);
+            this.PalImage.Location = new System.Drawing.Point(781, 381);
             this.PalImage.Name = "PalImage";
             this.PalImage.Size = new System.Drawing.Size(547, 325);
             this.PalImage.TabIndex = 2;
@@ -86,55 +89,55 @@ namespace color_spaces
             this.choseImageButton.TabIndex = 3;
             this.choseImageButton.Text = "Выберите картинку";
             this.choseImageButton.UseVisualStyleBackColor = true;
-            this.choseImageButton.Click += this.handleButtonClick;
+            this.choseImageButton.Click += this.HandleButtonClick;
             // 
             // chart1
             // 
             chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            this.palChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(53, 728);
-            this.chart1.Name = "chart1";
+            this.palChart.Legends.Add(legend1);
+            this.palChart.Location = new System.Drawing.Point(53, 728);
+            this.palChart.Name = "palChart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(511, 300);
-            this.chart1.TabIndex = 4;
-            this.chart1.Text = "chart1";
+            this.palChart.Series.Add(series1);
+            this.palChart.Size = new System.Drawing.Size(511, 300);
+            this.palChart.TabIndex = 4;
+            this.palChart.Text = "chart1";
             // 
             // chart2
             // 
             chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
+            this.hdtvChart.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
-            this.chart2.Location = new System.Drawing.Point(800, 728);
-            this.chart2.Name = "chart2";
+            this.hdtvChart.Legends.Add(legend2);
+            this.hdtvChart.Location = new System.Drawing.Point(800, 728);
+            this.hdtvChart.Name = "hdtvChart";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
-            this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(511, 300);
-            this.chart2.TabIndex = 5;
-            this.chart2.Text = "chart2";
+            this.hdtvChart.Series.Add(series2);
+            this.hdtvChart.Size = new System.Drawing.Size(511, 300);
+            this.hdtvChart.TabIndex = 5;
+            this.hdtvChart.Text = "chart2";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(32, 365);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(48, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Origignal";
+            this.label1.Text = "Original";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(35, 713);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "HD TV";
             // 
@@ -143,34 +146,53 @@ namespace color_spaces
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(778, 712);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.Size = new System.Drawing.Size(27, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "PAL";
             // 
-            // Form2
+            // pictureBox1
+            // 
+            this.diffImage.Location = new System.Drawing.Point(781, 37);
+            this.diffImage.Name = "diffImage";
+            this.diffImage.Size = new System.Drawing.Size(547, 325);
+            this.diffImage.TabIndex = 9;
+            this.diffImage.TabStop = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(781, 365);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(48, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Diff";
+            // 
+            // Task1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1450, 1061);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.diffImage);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.chart2);
-            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.hdtvChart);
+            this.Controls.Add(this.palChart);
             this.Controls.Add(this.choseImageButton);
             this.Controls.Add(this.PalImage);
             this.Controls.Add(this.HdTvImage);
             this.Controls.Add(this.originalImage);
-            this.Name = "Form2";
-            this.Text = "Form2";
-            ((System.ComponentModel.ISupportInitialize)(this.originalImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HdTvImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PalImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            this.Name = "Task1";
+            this.Text = "Grayscale";
+            ((System.ComponentModel.ISupportInitialize) (this.originalImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.HdTvImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.PalImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.palChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.hdtvChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.diffImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -178,33 +200,14 @@ namespace color_spaces
         private System.Windows.Forms.PictureBox originalImage;
         private System.Windows.Forms.PictureBox HdTvImage;
         private System.Windows.Forms.PictureBox PalImage;
+        private System.Windows.Forms.PictureBox diffImage;
         private System.Windows.Forms.Button choseImageButton;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
-
-        private void handleButtonClick(object sender, EventArgs eventArgs)
-        {
-            OpenFileDialog imageDialog = new OpenFileDialog();
-            imageDialog.Title = "Выберите картинку";
-            imageDialog.Filter = "Image Files(*.PNG;*.JPG;)|*.PNG;*.JPG;";
-            imageDialog.InitialDirectory = @"C:\";
-
-            if (imageDialog.ShowDialog() == DialogResult.OK)
-            {
-                Image chosenImage = Image.FromFile(imageDialog.FileName);
-                this.originalImage.Image = chosenImage;
-                GrayscaleConverter grayscaleConverter = new GrayscaleConverter(chosenImage as Bitmap);
-                grayscaleConverter.ConvertToGrayscale();
-                this.PalImage.Image = grayscaleConverter.GetPalBitmap();
-                this.HdTvImage.Image = grayscaleConverter.GetHdTvBitmap();
-                this.chart1.Series[0].Points.DataBindY(grayscaleConverter.GetPalIntensity());
-                this.chart2.Series[0].Points.DataBindY(grayscaleConverter.GetHdTvIntensity());
-            }
-        }
-
+        private System.Windows.Forms.DataVisualization.Charting.Chart palChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart hdtvChart;
         private Label label1;
         private Label label2;
         private Label label3;
+        private Label label4;
     }
 }
 

@@ -11,6 +11,7 @@ namespace color_spaces
 		private Bitmap _diffBitmap;
 		private int[] _palIntensity;
 		private int[] _hdtvIntensity;
+		private int _minDiff = int.MaxValue;
 
 		public GrayscaleConverter(Bitmap originalImage) 
 		{
@@ -31,6 +32,9 @@ namespace color_spaces
 
 					var hdTvValue = Convert.ToInt32(0.2126 * currentPixelColor.R + 0.7152 * currentPixelColor.G + 0.0722 * currentPixelColor.B);
 					var palValue = Convert.ToInt32(0.299 * currentPixelColor.R + 0.587 * currentPixelColor.G + 0.114 * currentPixelColor.B);
+					var diff = palValue - hdTvValue;
+					_minDiff = Math.Min(diff, _minDiff); 
+					
 					palIntensity[palValue]++;
 					hdTvIntensity[hdTvValue]++;
 
@@ -56,10 +60,32 @@ namespace color_spaces
 
 		public Bitmap GetDiffBitmap()
 		{
+			if (_diffBitmap == null)
+			{
+				_diffBitmap = CalcDiff();
+			}
+
 			return _diffBitmap;
 		}
 
-		public int[] GetPalIntensity() 
+		private Bitmap CalcDiff()
+		{
+			var diffImage = new Bitmap(_originalImage.Width, _originalImage.Height);
+			for (var x = 0; x < _originalImage.Width; x++)
+			{
+				for (var y = 0; y < _originalImage.Height; y++)
+				{
+					var palValue = _palBitmap.GetPixel(x, y).R;
+					var hdtvValue = _hdtvBitmap.GetPixel(x, y).R;
+					var diff = palValue - hdtvValue - _minDiff;
+					diffImage.SetPixel(x, y, Color.FromArgb(diff, diff, diff));
+				}
+			}
+
+			return diffImage;
+		}
+
+		public int[] GetPalIntensity()
 		{
 			return _palIntensity;
 		}
